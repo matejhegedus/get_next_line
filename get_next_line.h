@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:37:39 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/13 15:58:57 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/13 19:57:24 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@
 # endif
 
 char	*get_next_line(int fd);
+char	*add_buf_to_result(char *old_result, char *buf, size_t new_len);
 
 #endif

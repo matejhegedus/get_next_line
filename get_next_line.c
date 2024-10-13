@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:37:56 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/13 16:12:39 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:30:47 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,58 @@
 
 char *get_next_line(int fd)
 {
-	char	*buf;
+	static char	*buf = malloc(BUFFER_SIZE);
 	size_t	ln_len;
-	size_t	i;
+	int		i;
 	bool	is_eol;
 	char	*result;
+	int		bytes_read;
+	static size_t remainder_pos;
 
-
-	buf = malloc(BUFFER_SIZE);
 	if (buf == NULL)
 		return (NULL);
 	is_eol = false;
-	read(fd, buf, BUFFER_SIZE);
-	i = 0;
-	while (i < BUFFER_SIZE)
+	ln_len = 0;
+	while (!is_eol)
 	{
-		ln_len++;
-		if(buf[i] == '\n')
+		bytes_read = read(fd, buf, BUFFER_SIZE);
+		if (bytes_read == -1)
+			return NULL;
+		i = 0;
+		while (i < bytes_read && !is_eol)
 		{
-			is_eol = true;
-			break;
+			ln_len++;			
+			if(buf[i] == '\n')
+				is_eol = true;
+			i++;
 		}
+		result = add_buf_to_result(result, buf, ln_len);
+		if (result == NULL)
+			return (NULL);
 	}
-	
-	result = malloc(ln_len);
-	if (result == NULL)
-		return (NULL);
-	
-	return (buf);
+	free(buf);
+	return (result);
 }
 
 #include <fcntl.h>
 int main(void)
 {
 	int fd = open("./test/test.txt", O_RDONLY);
-	write(1, get_next_line(fd), BUFFER_SIZE);
+	
+	while (true)
+	{
+		char *str = get_next_line(fd);
+		if (str == NULL)
+			break;
+		int i = 0;
+		while(str[i] != '\n')
+		{
+			write(1, &str[i], 1);
+			i++;
+		}
+		if (str[i] == '\n')
+			write(1, &str[i], 1);
+		free(str);
+	}		
 	close(fd);
 }

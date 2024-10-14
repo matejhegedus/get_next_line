@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:37:56 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/14 23:17:43 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/14 23:25:54 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,33 +45,33 @@ char	*get_next_line(int fd)
 	return (result);
 }
 
-#include <fcntl.h>
-int main(void)
-{
-	int	fd;
-	fd = open("./test/test2.txt", O_RDONLY);
-	// fd = -2147483648;
-	int j = 0;
-	char *str;
-	while (++j)
-	{
-		str = get_next_line(fd);
-		if (str == NULL)
-				break;
-		if (j == 11)
-			write(1, str, 10);
-		else
-		{
-			int i = 0;
-			while(str[i] != '\n')
-			{
-				write(1, &str[i], 1);
-				i++;
-			}
-			if (str[i] == '\n')
-				write(1, &str[i], 1);
-		}
-		free(str);
-	}		
-	close(fd);
-}
+// #include <fcntl.h>
+// int main(void)
+// {
+// 	int	fd;
+// 	fd = open("./test/test2.txt", O_RDONLY);
+// 	// fd = -2147483648;
+// 	int j = 0;
+// 	char *str;
+// 	while (++j)
+// 	{
+// 		str = get_next_line(fd);
+// 		if (str == NULL)
+// 				break;
+// 		if (j == 11)
+// 			write(1, str, 10);
+// 		else
+// 		{
+// 			int i = 0;
+// 			while(str[i] != '\n')
+// 			{
+// 				write(1, &str[i], 1);
+// 				i++;
+// 			}
+// 			if (str[i] == '\n')
+// 				write(1, &str[i], 1);
+// 		}
+// 		free(str);
+// 	}		
+// 	close(fd);
+// }

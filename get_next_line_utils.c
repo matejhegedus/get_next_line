@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:11:41 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/14 20:56:58 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/14 23:20:24 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,3 @@ int read_buf(t_buf *buf, int fd, int ln_len)
 	else
 		return (1);
 }
-
-// char *save_remainder(written_count, )
-// {
-// }

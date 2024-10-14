@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:37:39 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/14 20:55:39 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/14 23:17:36 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 3
 # endif
+
+# include <stddef.h>
 
 typedef struct s_buf
 {

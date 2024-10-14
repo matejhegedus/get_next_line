@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:37:56 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/14 19:40:32 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/14 21:39:36 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,39 +18,30 @@
 
 char	*get_next_line(int fd)
 {
-	static char	buf[BUFFER_SIZE];
-	size_t		ln_len;
-	int			i;
-	bool		is_eol;
-	char		*result;
-	static int	bytes_read;
-	static int	remainder_count;
+	static t_buf	buf;
+	size_t			ln_len;
+	int				i;
+	char			*result;
+	bool			is_eol;
 
-	is_eol = false;
 	ln_len = 0;
+	i = 0;
+	is_eol = false;
 	while (!is_eol)
 	{
-		if (remainder_count == 0)
-		{
-			bytes_read = read(fd, buf, BUFFER_SIZE);
-			remainder_count = bytes_read;
-		}
-		if (bytes_read == -1 || (bytes_read == 0 && ln_len == 0))
+		if (read_buf(&buf, fd, ln_len) == 0)
 			return (NULL);
-		else if (bytes_read == 0 && ln_len != 0)
+		if (buf.bytes_read == 0 && ln_len != 0)
 			return (result);
 		i = 0;
-		while (i < bytes_read && !is_eol)
-		{
-			ln_len++;			
-			if (buf[bytes_read - remainder_count + i] == '\n')
+		while (i < buf.bytes_read)		
+			if (buf.buf[buf.bytes_read - buf.remainder_count + i++] == '\n')
 				is_eol = true;
-			i++;
-		}
-		result = add_buf_to_result(result, &(buf[BUFFER_SIZE - remainder_count]), ln_len - i, ln_len);
+		ln_len += i;
+		result = add_buf_to_result(result, &(buf.buf[BUFFER_SIZE - buf.remainder_count]), ln_len - i, ln_len);
 		if (result == NULL)
 			return (NULL);
-		remainder_count = bytes_read - i;
+		buf.remainder_count = buf.bytes_read - i;
 	}
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:11:41 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/14 16:41:38 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/14 18:43:06 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 // }
 
 // allocate longer result, copy the old value to result and free the old pointer
-char	*add_buf_to_result(char *old_result, char *buf, size_t old_len, size_t new_len)
+char	*add_buf_to_result(char *old_result, char *buf, size_t old_len,
+			size_t new_len)
 {
 	char	*new_result;
 	size_t	i;
@@ -50,3 +51,7 @@ char	*add_buf_to_result(char *old_result, char *buf, size_t old_len, size_t new_
 		free(old_result);
 	return (new_result);
 }
+
+// char *save_remainder(written_count, )
+// {
+// }

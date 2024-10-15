@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:37:56 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/15 12:04:31 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:31:26 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 char	*get_next_line(int fd)
 {
 	static t_buf	buf;
-	int				i;
 	t_result		result;
 	bool			is_eol;
+	int				i;	
 
 	result.len = 0;
 	i = 0;
@@ -42,7 +42,7 @@ char	*get_next_line(int fd)
 	}
 	return (result.content);
 }
-/*
+
 #include <fcntl.h>
 int main(void)
 {
@@ -51,13 +51,13 @@ int main(void)
 	// fd = -2147483648;
 	int j = 0;
 	char *str;
-	while (++j)
+	while (true)
 	{
 		str = get_next_line(fd);
 		if (str == NULL)
 				break;
-		if (j == 11)
-			write(1, str, 10);
+		if (j == 0)
+			write(1, str, 1);
 		else
 		{
 			int i = 0;
@@ -70,7 +70,7 @@ int main(void)
 				write(1, &str[i], 1);
 		}
 		free(str);
+		j++;
 	}		
 	close(fd);
 }
-*/

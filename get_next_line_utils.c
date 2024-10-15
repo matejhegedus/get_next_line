@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:11:41 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/15 12:03:03 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:29:57 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 #include <unistd.h>
 #include "get_next_line.h"
 
-// size_t	ft_strlen(const char *s)
-// {
-// 	size_t	char_count;
-
-// 	char_count = 0;
-// 	while (s[char_count] != '\0')
-// 		char_count++;
-// 	return (char_count);
-// }
 // allocate longer result, copy the old value to result and free the old pointer
 
 void	add_buf_to_result(t_result *result, char *buf, size_t add_len)

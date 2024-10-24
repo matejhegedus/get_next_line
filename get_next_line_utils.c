@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:11:41 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/15 13:29:57 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:59:58 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 #include "get_next_line.h"
 
 // allocate longer result, copy the old value to result and free the old pointer
-
+// allocate memory for new result with the length = (old length + add_len)
+// copy old result to new result
+// copy buffer content into the rest of new result
+// free old result if it was not empty
 void	add_buf_to_result(t_result *result, char *buf, size_t add_len)
 {
 	char	*new_result;
@@ -43,11 +46,12 @@ void	add_buf_to_result(t_result *result, char *buf, size_t add_len)
 }
 
 // Function checks if theres anything left over from the last read
-// by checking the variable remainder_count. If it's 0, it reads into 
-// the buffer.
-// Return value 0 when gnl should return null - there was an error with read
+// by checking the variable size_rem. If it's 0, it reads a new set
+// of characters from fd into the buffer.
+// Return values:
+//   0 when gnl should return null - there was an error with read
 // or it read 0 bytes and the current resulting line is empty
-// Return value 1, when gnl should process the remainder of the current buffer  
+//   1, when gnl should process the remainder of the current buffer  
 int	read_buf(t_buf *buf, int fd, int ln_len)
 {
 	if ((*buf).size_rem == 0)

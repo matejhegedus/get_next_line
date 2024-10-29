@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:11:41 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/24 13:59:58 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/10/30 00:32:23 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,28 @@ void	add_buf_to_result(t_result *result, char *buf, size_t add_len)
 	char	*new_result;
 	size_t	i;
 
-	new_result = malloc((result->len + add_len) * sizeof(char));
-	if (new_result == NULL)
-		return ;
-	i = 0;
-	while (i < result->len)
+	if (add_len > 0)
 	{
-		new_result[i] = result->content[i];
-		i++;
+		new_result = malloc((result->len + add_len) * sizeof(char));
+		if (new_result == NULL)
+			return ;
+		i = 0;
+		while (i < result->len)
+		{
+			new_result[i] = result->content[i];
+			i++;
+		}
+		i = 0;
+		while (i < add_len)
+		{
+			new_result[i + result->len] = buf[i];
+			i++;
+		}
+		if (result->len != 0)
+			free(result->content);
+		result->content = new_result;
+		result->len += add_len;
 	}
-	i = 0;
-	while (i < add_len)
-	{
-		new_result[i + result->len] = buf[i];
-		i++;
-	}
-	if (result->len != 0)
-		free(result->content);
-	result->content = new_result;
-	result->len += add_len;
 }
 
 // Function checks if theres anything left over from the last read
@@ -60,7 +63,28 @@ int	read_buf(t_buf *buf, int fd, int ln_len)
 		(*buf).size_rem = (*buf).size_read;
 	}
 	if ((*buf).size_read == -1 || ((*buf).size_read == 0 && ln_len == 0))
+	{
+		(*buf).size_rem = 0;
 		return (0);
+	}
 	else
 		return (1);
+}
+
+void	add_nul(char **str, int len)
+{
+	char	*new_str;
+	int		i;
+
+	new_str = malloc(len + 1);
+	i = 0;
+	while (i < len)
+	{
+		new_str[i] = (*str)[i];
+		i++;
+	}
+	if (len > 0)
+		free((*str));
+	new_str[i] = '\0';
+	(*str) = new_str;
 }

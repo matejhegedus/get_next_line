@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:37:56 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/10/30 00:54:28 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/11/06 21:18:58 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,10 @@ char	*get_next_line(int fd)
 	is_eol = false;
 	while (!is_eol)
 	{
-		if (read_buf(&buf, fd, result.len) == 0)
+		if (read_buf(&buf, fd, result) == 0)
 			return (NULL);
 		if (buf.size_read == 0 && result.len != 0)
-		{
-			add_nul(&(result.content), result.len);
-			return (result.content);
-		}
+			return (add_nul(&(result.content), result.len));
 		i = 0;
 		while (i < buf.size_rem && !is_eol)
 			if (buf.buf[buf.size_read - buf.size_rem + i++] == '\n')
@@ -43,86 +40,65 @@ char	*get_next_line(int fd)
 			return (NULL);
 		buf.size_rem = buf.size_rem - i;
 	}
-	add_nul(&(result.content), result.len);
-	return (result.content);
+	return (add_nul(&(result.content), result.len));
 }
 
 // #include <fcntl.h>
 // #include <stdio.h>
 // int main(void)
 // {
-// 	// // while (true)
-// 	// // {
-// 	// // 	char *str = get_next_line(0);
-// 	// // 	int i = 0;
-// 	// // 	while(str[i] != '\n')
-// 	// // 	{
-// 	// // 		write(1, &str[i], 1);
-// 	// // 		i++;
-// 	// // 	}
-// 	// // 	write(1, &str[i], 1);
-// 	// // 	free(str);
-// 	// // }
-
-// 	// int	fd;
-// 	// fd = open("./test/read_error.txt", O_RDONLY);
-// 	// // fd = 0;
-// 	// // int j = 0;
-// 	// char *str;
-// 	// // while (true)
-// 	// // {
-// 	// // 	str = get_next_line(fd);
-// 	// // 	if (str == NULL)
-// 	// // 			break;
-// 	// // 	if (j == 0)
-// 	// // 		write(1, str, 1);
-// 	// // 	else
-// 	// // 	{
-// 	// // 		int i = 0;
-// 	// // 		while(str[i] != '\n')
-// 	// // 		{
-// 	// // 			write(1, &str[i], 1);
-// 	// // 			i++;
-// 	// // 		}
-// 	// // 		if (str[i] == '\n')
-// 	// // 			write(1, &str[i], 1);
-// 	// // 	}
-// 	// // 	free(str);
-// 	// // 	j++;
-// 	// // }
-// 	// while ((str = get_next_line(fd)))
+// 	// while (true)
 // 	// {
-// 	// 	printf("%s", str);
+// 	// 	char *str = get_next_line(0);
+// 	// 	int i = 0;
+// 	// 	while(str[i] != '\n')
+// 	// 	{
+// 	// 		write(1, &str[i], 1);
+// 	// 		i++;
+// 	// 	}
+// 	// 	write(1, &str[i], 1);
 // 	// 	free(str);
 // 	// }
-// 	// close(fd);
 
+// 	int	fd;
+// 	fd = open("./test/lines_around_10.txt", O_RDONLY);
+// 	// fd = 0;
+// 	// int j = 0;
 // 	char *str;
-// 	char *name = "test/read_error.txt";
-// 	int fd = open(name, O_RDONLY);
-// 	str = get_next_line(fd);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	free(str);
-// 	if (BUFFER_SIZE > 100) {
-// 		char *temp;
-// 		do {
-// 			temp = get_next_line(fd);
-// 			free(temp);
-// 		} while (temp != NULL);
+// 	// while (true)
+// 	// {
+// 	// 	str = get_next_line(fd);
+// 	// 	if (str == NULL)
+// 	// 			break;
+// 	// 	if (j == 0)
+// 	// 		write(1, str, 1);
+// 	// 	else
+// 	// 	{
+// 	// 		int i = 0;
+// 	// 		while(str[i] != '\n')
+// 	// 		{
+// 	// 			write(1, &str[i], 1);
+// 	// 			i++;
+// 	// 		}
+// 	// 		if (str[i] == '\n')
+// 	// 			write(1, &str[i], 1);
+// 	// 	}
+// 	// 	free(str);
+// 	// 	j++;
+// 	// }
+// 	while ((str = get_next_line(fd)))
+// 	{
+// 		printf("%s", str);
+// 		free(str);
 // 	}
 // 	str = get_next_line(fd);
+// 	printf("%s", str);
+// 	free(str);
+// 	str = get_next_line(fd);
+// 	printf("%s", str);
+// 	free(str);
+// 	str = get_next_line(fd);
+// 	printf("%s", str);
 // 	free(str);
 // 	close(fd);
-// 	fd = open(name, O_RDONLY);
-// 	str = get_next_line(fd);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	free(str);
 // }

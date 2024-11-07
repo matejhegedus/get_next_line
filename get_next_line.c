@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:37:56 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/11/06 21:18:58 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/11/07 13:56:10 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*get_next_line(int fd)
 // 	// }
 
 // 	int	fd;
-// 	fd = open("./test/lines_around_10.txt", O_RDONLY);
+// 	fd = open("./test/test2.txt", O_RDONLY);
 // 	// fd = 0;
 // 	// int j = 0;
 // 	char *str;

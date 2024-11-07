@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 16:11:41 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/11/07 13:56:31 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/11/07 19:51:36 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,18 @@ void	add_buf_to_result(t_result *result, char *buf, size_t add_len)
 //   0 when gnl should return null - there was an error with read
 // or it read 0 bytes and the current resulting line is empty
 //   1, when gnl should process the remainder of the current buffer
-int	read_buf(t_buf *buf, int fd, t_result result)
+int	read_buf(t_buf *buf, int fd, t_result *result)
 {
 	if ((*buf).size_rem == 0)
 	{
 		(*buf).size_read = read(fd, (*buf).buf, BUFFER_SIZE);
 		(*buf).size_rem = (*buf).size_read;
 		if ((*buf).size_read == -1
-			|| ((*buf).size_read == 0 && result.len == 0))
+			|| ((*buf).size_read == 0 && result->len == 0))
 		{
 			(*buf).size_rem = 0;
-			if (result.len > 0)
-				free(result.content);
+			if (result->len > 0)
+				free(result->content);
 			return (0);
 		}
 	}
@@ -82,7 +82,11 @@ char	*add_nul(char **str, int len)
 
 	new_str = malloc(len + 1);
 	if (new_str == NULL)
+	{
+		if (len > 0)
+			free((*str));
 		return (NULL);
+	}
 	i = 0;
 	while (i < len)
 	{

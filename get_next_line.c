@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:37:56 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/11/07 13:56:10 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/11/07 20:19:47 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_next_line(int fd)
 	is_eol = false;
 	while (!is_eol)
 	{
-		if (read_buf(&buf, fd, result) == 0)
+		if (read_buf(&buf, fd, &result) == 0)
 			return (NULL);
 		if (buf.size_read == 0 && result.len != 0)
 			return (add_nul(&(result.content), result.len));
@@ -61,7 +61,7 @@ char	*get_next_line(int fd)
 // 	// }
 
 // 	int	fd;
-// 	fd = open("./test/test2.txt", O_RDONLY);
+// 	fd = open("./test/giant_line.txt", O_RDONLY);
 // 	// fd = 0;
 // 	// int j = 0;
 // 	char *str;

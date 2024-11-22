@@ -6,7 +6,7 @@
 /*   By: mhegedus <mhegedus@student.42vienna.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 22:37:56 by mhegedus          #+#    #+#             */
-/*   Updated: 2024/11/07 20:19:47 by mhegedus         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:14:48 by mhegedus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include <stdbool.h>
 #include "get_next_line.h"
 
+// Returns a pointer to a line of text read from the file descriptor fd.
+// The returned pointer should be passed to free() when no longer needed.
+// If fd points to a file, subsequent calls to get_next_line() allow reading 
+// the whole file.
+// Returns NULL if read fails or if there's nothing left to read.
 char	*get_next_line(int fd)
 {
 	static t_buf	buf;
@@ -23,11 +28,11 @@ char	*get_next_line(int fd)
 	int				i;	
 
 	result.len = 0;
-	i = 0;
 	is_eol = false;
+	i = 0;
 	while (!is_eol)
 	{
-		if (read_buf(&buf, fd, &result) == 0)
+		if (read_buf_if_empty(&buf, fd, &result) == 0)
 			return (NULL);
 		if (buf.size_read == 0 && result.len != 0)
 			return (add_nul(&(result.content), result.len));
@@ -47,58 +52,14 @@ char	*get_next_line(int fd)
 // #include <stdio.h>
 // int main(void)
 // {
-// 	// while (true)
-// 	// {
-// 	// 	char *str = get_next_line(0);
-// 	// 	int i = 0;
-// 	// 	while(str[i] != '\n')
-// 	// 	{
-// 	// 		write(1, &str[i], 1);
-// 	// 		i++;
-// 	// 	}
-// 	// 	write(1, &str[i], 1);
-// 	// 	free(str);
-// 	// }
-
 // 	int	fd;
-// 	fd = open("./test/giant_line.txt", O_RDONLY);
-// 	// fd = 0;
-// 	// int j = 0;
+// 	fd = open("./test/test.txt", O_RDONLY);
 // 	char *str;
-// 	// while (true)
-// 	// {
-// 	// 	str = get_next_line(fd);
-// 	// 	if (str == NULL)
-// 	// 			break;
-// 	// 	if (j == 0)
-// 	// 		write(1, str, 1);
-// 	// 	else
-// 	// 	{
-// 	// 		int i = 0;
-// 	// 		while(str[i] != '\n')
-// 	// 		{
-// 	// 			write(1, &str[i], 1);
-// 	// 			i++;
-// 	// 		}
-// 	// 		if (str[i] == '\n')
-// 	// 			write(1, &str[i], 1);
-// 	// 	}
-// 	// 	free(str);
-// 	// 	j++;
-// 	// }
+
 // 	while ((str = get_next_line(fd)))
 // 	{
 // 		printf("%s", str);
 // 		free(str);
 // 	}
-// 	str = get_next_line(fd);
-// 	printf("%s", str);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	printf("%s", str);
-// 	free(str);
-// 	str = get_next_line(fd);
-// 	printf("%s", str);
-// 	free(str);
 // 	close(fd);
 // }
